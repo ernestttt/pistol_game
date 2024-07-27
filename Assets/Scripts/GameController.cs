@@ -8,5 +8,6 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         _uiManager.OnShoot += _player.Shoot;
+        _uiManager.OnGunChange += _player.ChangeGun;
     }
 }
