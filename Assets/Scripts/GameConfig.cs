@@ -6,6 +6,12 @@ using UnityEngine;
 public class GameConfig : ScriptableObject
 {
     [SerializeField] private float speed = 1f;
+    [SerializeField] private Bullet _bulletPrefab;
+    [SerializeField] private float _bulletSpeed;
+    [SerializeField] private float _bulletLifetime;
 
     public float Speed => speed;
+    public Bullet BulletPrefab => _bulletPrefab;
+    public float BulletSpeed => _bulletSpeed;
+    public float BulletLifetime => _bulletLifetime;
 }

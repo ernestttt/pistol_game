@@ -21,7 +21,7 @@ public class InputManager : MonoBehaviour
             _buttonPressed = true;
             _startMousePos = Input.mousePosition;
         }
-
+        
         if (Input.GetMouseButtonUp(0))
         {
             _buttonPressed = false;
