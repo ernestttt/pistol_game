@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class Player : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class Player : MonoBehaviour
     private GunType _currentGunType = GunType.Pistol;
     private bool _isMakingShoot = false;
 
+    private Goal[] _goals;
+
     private void Awake(){
         _playerRenderer = GetComponent<SpriteRenderer>();
     }
@@ -30,7 +33,7 @@ public class Player : MonoBehaviour
         maxOffsetPlayer = _playerRenderer.bounds.max;
         _movementArea = _floor.bounds;
         _inputManager.OnMove += Move;
-        _inputManager.OnMove += Rotate;
+        // _inputManager.OnMove += Rotate;
 
         // init guns
 
@@ -49,6 +52,8 @@ public class Player : MonoBehaviour
             }
             _isMakingShoot = false;
         });
+
+        _goals = FindObjectsOfType<Goal>();
     }
 
     private void Rotate(Vector2 moveVector){
@@ -77,7 +82,31 @@ public class Player : MonoBehaviour
 
     public void Shoot(){
         if(_isMakingShoot) return;
+        TryToFindClosestGoal(out Goal goal);
+        if(goal == null) return;
+        RotateToGoal(goal);
         _gunActions[_currentGunType]?.Invoke();
+    }
+
+    private void RotateToGoal(Goal goal){
+
+        float angle = Vector3.SignedAngle(Vector3.up, goal.transform.position - transform.position, Vector3.forward);
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    private bool TryToFindClosestGoal(out Goal goal){
+        goal = null;
+
+        Goal potentialGoal = _goals.Where(a => a != null && a.IsActiveGoal).OrderBy(a => (transform.position - a.transform.position).sqrMagnitude).FirstOrDefault();
+        if(potentialGoal == null) return false;
+        float sqrRadius = _gameConfig.Radius * _gameConfig.Radius;
+        float sqrDistance = Vector3.SqrMagnitude(transform.position - potentialGoal.transform.position);
+        if(sqrDistance < sqrRadius){
+            goal = potentialGoal;
+            return true;
+        }
+
+        return false;
     }
 
     private void MakeOneShoot(){
