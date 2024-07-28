@@ -1,20 +1,25 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+namespace PistolGame
 {
-    [SerializeField] private GameConfig _gameConfig;
+    public class Bullet : MonoBehaviour
+    {
+        [SerializeField] private GameConfig _gameConfig;
 
-    private float lifeTime = 0;
+        private float lifeTime = 0;
 
-    public float BulletDamage => _gameConfig.BulletDamage;
+        public float BulletDamage => _gameConfig.BulletDamage;
 
-    private void Update(){
-        transform.position += _gameConfig.BulletSpeed * transform.up * Time.deltaTime;
-
-        lifeTime += Time.deltaTime;
-        if(lifeTime > _gameConfig.BulletLifetime)
+        private void Update()
         {
-            Destroy(gameObject);
+            transform.position += _gameConfig.BulletSpeed * transform.up * Time.deltaTime;
+
+            lifeTime += Time.deltaTime;
+            if (lifeTime > _gameConfig.BulletLifetime)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
+

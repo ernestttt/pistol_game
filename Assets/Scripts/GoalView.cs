@@ -1,40 +1,45 @@
 using UnityEngine;
 using System.Threading.Tasks;
 
-[RequireComponent(typeof(SpriteRenderer))]
-public class GoalView : MonoBehaviour
+namespace PistolGame
 {
-    private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Color _damageColor;
-    [SerializeField] private Color _inactiveColor;
-    private Color _goalColor;
-
-    private bool _isPlayingDamage = false;
-
-    private void Awake()
+    [RequireComponent(typeof(SpriteRenderer))]
+    public class GoalView : MonoBehaviour
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+        private SpriteRenderer _spriteRenderer;
+        [SerializeField] private Color _damageColor;
+        [SerializeField] private Color _inactiveColor;
+        private Color _goalColor;
 
-    private void Start(){
-        _goalColor = _spriteRenderer.color;
-    }
+        private bool _isPlayingDamage = false;
 
-    public void SetInactive(){
-        _spriteRenderer.color = _inactiveColor;
-    }
+        private void Awake()
+        {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
 
-    public async void PlayDamage()
-    {
-        if(_isPlayingDamage) return;
+        private void Start()
+        {
+            _goalColor = _spriteRenderer.color;
+        }
 
-        _isPlayingDamage = true;
+        public void SetInactive()
+        {
+            _spriteRenderer.color = _inactiveColor;
+        }
 
-        _spriteRenderer.color = _damageColor;
-        await Task.Delay(200);
-        if(!this)   return;
-        _spriteRenderer.color = _goalColor;
+        public async void PlayDamage()
+        {
+            if (_isPlayingDamage) return;
 
-        _isPlayingDamage = false;
+            _isPlayingDamage = true;
+
+            _spriteRenderer.color = _damageColor;
+            await Task.Delay(200);
+            if (!this) return;
+            _spriteRenderer.color = _goalColor;
+
+            _isPlayingDamage = false;
+        }
     }
 }

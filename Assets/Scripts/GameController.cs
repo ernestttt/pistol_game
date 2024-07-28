@@ -1,13 +1,17 @@
 using UnityEngine;
+using PistolGame.UI;
 
-public class GameController : MonoBehaviour
+namespace PistolGame
 {
-    [SerializeField] private Player _player;
-    [SerializeField] private UIManager _uiManager;
-
-    private void Start()
+    public class GameController : MonoBehaviour
     {
-        _uiManager.OnShoot += _player.Shoot;
-        _uiManager.OnGunChange += _player.ChangeGun;
+        [SerializeField] private Player _player;
+        [SerializeField] private UIManager _uiManager;
+
+        private void Start()
+        {
+            _uiManager.OnShoot += _player.Shoot;
+            _uiManager.OnGunChange += _player.ChangeGun;
+        }
     }
 }

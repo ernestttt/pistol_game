@@ -4,81 +4,92 @@ using System;
 using System.Threading.Tasks;
 using System.Linq;
 
-public class PlayerShooter : MonoBehaviour{
-    [SerializeField] private GameConfig _gameConfig;
-    [SerializeField] private PlayerMover _mover;
-    private Dictionary<GunType, Action> _gunActions = new Dictionary<GunType, Action>();
-
-    private GunType _currentGunType = GunType.Pistol;
-    private bool _isMakingShoot = false;
-
-    private Goal[] _goals;
-
-    private void Start()
+namespace PistolGame
+{
+    public class PlayerShooter : MonoBehaviour
     {
-        // init guns
-        _gunActions.Add(GunType.Pistol, async () =>
-        {
-            _isMakingShoot = true;
-            MakeOneShoot();
-            await Task.Delay(200);
-            _isMakingShoot = false;
-        });
+        [SerializeField] private GameConfig _gameConfig;
+        [SerializeField] private PlayerMover _mover;
+        private Dictionary<GunType, Action> _gunActions = new Dictionary<GunType, Action>();
 
-        _gunActions.Add(GunType.Shotgun, async () =>
+        private GunType _currentGunType = GunType.Pistol;
+        private bool _isMakingShoot = false;
+
+        private Goal[] _goals;
+
+        private void Start()
         {
-            _isMakingShoot = true;
-            for (int i = 0; i < 5; i++)
+            // init guns
+            _gunActions.Add(GunType.Pistol, async () =>
             {
+                _isMakingShoot = true;
                 MakeOneShoot();
                 await Task.Delay(200);
-            }
-            _isMakingShoot = false;
-        });
+                _isMakingShoot = false;
+            });
 
-        _goals = FindObjectsOfType<Goal>();
-    }
+            _gunActions.Add(GunType.Shotgun, async () =>
+            {
+                _isMakingShoot = true;
+                for (int i = 0; i < 5; i++)
+                {
+                    MakeOneShoot();
+                    await Task.Delay(200);
+                }
+                _isMakingShoot = false;
+            });
 
-    public void ChangeGun(int gunIndex)
-    {
-        GunType gunType = (GunType)gunIndex;
-
-        _currentGunType = gunType;
-    }
-
-    public void Shoot()
-    {
-        if (_isMakingShoot) return;
-        if (!TryToFindClosestGoal(out Goal goal)) return;
-        _mover.Rotate(goal.transform);
-        _gunActions[_currentGunType]?.Invoke();
-    }
-
-    private bool TryToFindClosestGoal(out Goal goal)
-    {
-        goal = null;
-
-        Goal potentialGoal = _goals.Where(a => a != null && a.IsActiveGoal).OrderBy(a => (transform.position - a.transform.position).sqrMagnitude).FirstOrDefault();
-        if (potentialGoal == null) return false;
-        float sqrRadius = _gameConfig.Radius * _gameConfig.Radius;
-        float sqrDistance = Vector3.SqrMagnitude(transform.position - potentialGoal.transform.position);
-        if (sqrDistance < sqrRadius)
-        {
-            goal = potentialGoal;
-            return true;
+            _goals = FindObjectsOfType<Goal>();
         }
 
-        return false;
+        public void ChangeGun(int gunIndex)
+        {
+            GunType gunType = (GunType)gunIndex;
+
+            _currentGunType = gunType;
+        }
+
+        public void Shoot()
+        {
+            if (_isMakingShoot) return;
+            if (!TryToFindClosestGoal(out Goal goal)) return;
+            _mover.Rotate(goal.transform);
+            _gunActions[_currentGunType]?.Invoke();
+        }
+
+
+        private bool TryToFindClosestGoal(out Goal goal)
+        {
+            goal = null;
+
+            Goal potentialGoal = _goals.Where(a => a != null && a.IsActiveGoal).OrderBy(a => (transform.position - a.transform.position).sqrMagnitude).FirstOrDefault();
+            if (potentialGoal == null) return false;
+            float sqrRadius = _gameConfig.Radius * _gameConfig.Radius;
+            float sqrDistance = Vector3.SqrMagnitude(transform.position - potentialGoal.transform.position);
+            if (sqrDistance < sqrRadius)
+            {
+                goal = potentialGoal;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void MakeOneShoot()
+        {
+            if (!this) return;
+            float angle = Vector3.SignedAngle(Vector3.up, transform.up, Vector3.forward);
+
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            Bullet bullet = Instantiate(
+                _gameConfig.BulletPrefab, transform.position, rotation).
+                GetComponent<Bullet>();
+        }
     }
 
-    private void MakeOneShoot()
+    public enum GunType
     {
-        if (!this) return;
-        float angle = Vector3.SignedAngle(Vector3.up, transform.up, Vector3.forward);
-
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        Bullet bullet = Instantiate(
-            _gameConfig.BulletPrefab, transform.position, rotation).
-            GetComponent<Bullet>();
+        Pistol = 0,
+        Shotgun = 1,
     }
 }

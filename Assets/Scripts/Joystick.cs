@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UI
+namespace PistolGame.UI
 {
     public class Joystick : MonoBehaviour
     {
