@@ -32,6 +32,7 @@ public class GoalView : MonoBehaviour
 
         _spriteRenderer.color = _damageColor;
         await Task.Delay(200);
+        if(!this)   return;
         _spriteRenderer.color = _goalColor;
 
         _isPlayingDamage = false;
