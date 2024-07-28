@@ -15,5 +15,6 @@ MonoBehaviour:
   speed: 0.01
   _bulletPrefab: {fileID: -7030309955202265704, guid: 4c413dab5e0136a46a589cc648eb3bb2, type: 3}
   _bulletSpeed: 5
-  _bulletLifetime: 10
-  _radius: 3
+  _bulletLifetime: 5
+  _radius: 5
+  _bulletDamage: 0.3

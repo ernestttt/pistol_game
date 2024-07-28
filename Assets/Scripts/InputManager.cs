@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour
             }
             else
             {
-                move = (Input.mousePosition - _startMousePos);
+                move = Input.mousePosition - _startMousePos;
                 move *= Time.deltaTime;
                 OnMove?.Invoke(new Vector3(move.x, move.y));
             }

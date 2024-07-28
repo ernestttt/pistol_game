@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +23,6 @@ public class UIManager : MonoBehaviour
             _gunGroup[i].onValueChanged.AddListener((isOn) =>
             {
                 if (!isOn) return;
-                Debug.Log("Changed gun to " + gunIndex);
                 OnGunChange?.Invoke(gunIndex);
             });
         }

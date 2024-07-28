@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -7,6 +5,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private GameConfig _gameConfig;
 
     private float lifeTime = 0;
+
+    public float BulletDamage => _gameConfig.BulletDamage;
 
     private void Update(){
         transform.position += _gameConfig.BulletSpeed * transform.up * Time.deltaTime;
