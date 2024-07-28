@@ -1893,6 +1893,7 @@ GameObject:
   - component: {fileID: 1303446391}
   - component: {fileID: 1303446392}
   - component: {fileID: 1303446393}
+  - component: {fileID: 1303446394}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1980,10 +1981,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c1831990d3d684f97cfd5936fda3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputManager: {fileID: 433924050}
   _gameConfig: {fileID: 11400000, guid: a516e30170208604bbfa9c39d96a7570, type: 2}
-  _floor: {fileID: 588791665}
   _mover: {fileID: 1303446393}
+  _shooter: {fileID: 0}
 --- !u!114 &1303446393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1999,6 +1999,20 @@ MonoBehaviour:
   _inputManager: {fileID: 433924050}
   _gameConfig: {fileID: 11400000, guid: a516e30170208604bbfa9c39d96a7570, type: 2}
   _floor: {fileID: 588791665}
+--- !u!114 &1303446394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303446389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c35c0c69cafbb942877f71310bb64e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameConfig: {fileID: 11400000, guid: a516e30170208604bbfa9c39d96a7570, type: 2}
+  _mover: {fileID: 1303446393}
 --- !u!1 &1309230453
 GameObject:
   m_ObjectHideFlags: 0
