@@ -54,8 +54,6 @@ public class PlayerShooter : MonoBehaviour{
         _gunActions[_currentGunType]?.Invoke();
     }
 
-
-
     private bool TryToFindClosestGoal(out Goal goal)
     {
         goal = null;

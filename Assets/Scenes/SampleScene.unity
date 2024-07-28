@@ -1983,7 +1983,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameConfig: {fileID: 11400000, guid: a516e30170208604bbfa9c39d96a7570, type: 2}
   _mover: {fileID: 1303446393}
-  _shooter: {fileID: 0}
+  _shooter: {fileID: 1303446394}
+  _inputManager: {fileID: 433924050}
+  _floorRenderer: {fileID: 588791665}
 --- !u!114 &1303446393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1996,9 +1998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d9a83fe79305341abc87b1f0bafb52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputManager: {fileID: 433924050}
   _gameConfig: {fileID: 11400000, guid: a516e30170208604bbfa9c39d96a7570, type: 2}
-  _floor: {fileID: 588791665}
 --- !u!114 &1303446394
 MonoBehaviour:
   m_ObjectHideFlags: 0
